@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bflowers.apps.BflowersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
