@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from rest_framework.viewsets import ModelViewSet
 from bflowers import serializers
 from bflowers import models
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 
 class ProductViewSet(ModelViewSet):
     serializer_class = serializers.Product
@@ -15,6 +18,7 @@ class CategoryViewSet(ModelViewSet):
 
     def get_queryset(self):
         return models.Category.objects.all()
+
 
 # def product_list(request, category_slug=None):
 #     category = None

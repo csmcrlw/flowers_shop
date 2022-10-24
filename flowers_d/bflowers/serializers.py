@@ -8,7 +8,7 @@ class Product(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_display(self, obj: models.Product) -> str:
-        return f'{obj.id}. {obj.name}'
+        return obj.name
 
 
 class Category(serializers.ModelSerializer):
@@ -18,4 +18,5 @@ class Category(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_display(self, obj: models.Category) -> str:
-        return f'{obj.id}. {obj.name}'
+        return obj.name
+
