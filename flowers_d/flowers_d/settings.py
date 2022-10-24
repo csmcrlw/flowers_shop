@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bflowers.apps.BflowersConfig',
     'cart',
+    'phonenumber_field',
     'rest_framework',
 ]
 
