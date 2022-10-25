@@ -1,7 +1,6 @@
 from django.contrib import admin
 from bflowers import models
 
-
 @admin.register(models.Product)
 class Product(admin.ModelAdmin):
     search_field = ('name', )
@@ -13,5 +12,6 @@ class Product(admin.ModelAdmin):
 
 @admin.register(models.Category)
 class Category(admin.ModelAdmin):
+    search_field = ('name',)
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}

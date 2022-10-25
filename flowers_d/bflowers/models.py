@@ -1,7 +1,5 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -9,8 +7,8 @@ class Category(models.Model):
 
     class Meta:
         ordering = ('name', )
-        verbose_name = 'Категория'
-        verbose_name = 'Категории'
+        verbose_name = 'Category'
+        verbose_name = 'Categories'
 
     def __str__(self):
         return self.name
@@ -29,8 +27,14 @@ class Product(models.Model):
     class Meta:
         ordering = ('name', )
         index_together = (('id', 'slug'), )
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
 
     def __str__(self):
         return self.name
+
+    def is_available(self):
+        if self.stock == 0:
+            self.available = False
+        return self.available
+
