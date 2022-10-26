@@ -28,13 +28,23 @@ class LoginUser(serializers.Serializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'products', 'quantity']
+        fields = ['id', 'user', 'products', 'quantity', 'is_ordered']
 
 class UserSerializer(serializers.ModelSerializer):
     cart = CartSerializer(many=True)
     class Meta:
         model = User
         fields = ['id', 'phone', 'email', 'cart']
+
+class CartAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'
+
+class UserAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
 
 # class UserSerializer(serializers.ModelSerializer):
 #     class Meta:

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cart',
     'phonenumber_field',
     'rest_framework',
+    'rest_framework_swagger',
     'rest_framework.authtoken',
 ]
 
