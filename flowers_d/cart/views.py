@@ -1,11 +1,15 @@
+from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.generics import GenericAPIView
-from rest_framework.response import Response
-from .models import User, Cart
-from .permissions import IsOwnerOrReadOnly
-from .serializers import CartSerializer, LoginUser, RegisterUser
 from rest_framework.authtoken.models import Token
-
+from rest_framework.decorators import action
+from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
+from bflowers.models import Product
+from .models import User, Cart, CustomUser
+from .permissions import IsOwnerOrReadOnly
+from .serializers import CartSerializer, LoginUser, RegisterUser, UserAdminSerializer
+import pyttsx3
 
 class RegisterUser(GenericAPIView):
     queryset = User
@@ -34,14 +38,36 @@ class LoginUser(GenericAPIView):
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsOwnerOrReadOnly, IsAdminUser)
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user, is_ordered=True)
+
+    def perform_create(self, serializer):
+        serializer.validated_data['user'] = self.request.user
+        super().perform_create(serializer)
+
+    @action(detail=True, methods=['get'])
+    def index(self, request, pk):
+        cart = Cart.objects.filter(user=self.request.user).values_list('products')
+        products = []
+        for c in cart:
+            for c1 in c:
+                product = str(Product.objects.get(pk=c1))
+                products.append(product)
+        obj = ', '.join(products)
+        engine = pyttsx3.init()
+        engine.say(f'Ваш заказ: {obj}')
+        engine.runAndWait()
+        return Response()
 
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserAdminSerializer
+    permission_classes = (IsAdminUser, )
 
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all().order_by('id')
-#     serializer_class = UserSerializer
-#     permission_classes = (IsAdminUser, IsOwnerOrReadOnly)
+
 
 
 
