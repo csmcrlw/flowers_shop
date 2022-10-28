@@ -50,7 +50,7 @@ python manage.py runserver
 | /cart/cart/{id}/           |               GET   |                                            shows a cart to owner user |
 | /cart/cart/{id}/           | POST, PATCH         |                                                          edits a cart |
 | /cart/cart/{id}/           |        DELETE       |                                                        deletes a cart |
-| /cart/cart/{id}/index/     |        GET          |                                                    **text-to-speech** |
+| **/cart/cart/{id}/index/** |    **GET**          |                                                    **text-to-speech** |
 
 **For admins only:**
 | pattern                    | type                |                                                           description |
